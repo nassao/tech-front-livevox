@@ -1,6 +1,11 @@
 {
   "name": "tech-front-livevox",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "author": {
+    "name": "Daniel Ramírez",
+    "email": "nassao@gmail.com",
+    "url": "https://nassao.com"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
