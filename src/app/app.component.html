@@ -1,5 +1,30 @@
-<div class="content">
-  <span>{{ title }} app is running!</span>
-</div>
+<mat-toolbar color="primary" class="app-toolbar">
+  <img
+    width="40"
+    alt="nassao logo"
+    src="/assets/favicon.png"
+  />
+  <span class="spacer"></span>
+  <span id="title">{{ title }}</span>
+  <span class="spacer"></span>
+  <mat-chip-list>
+    <mat-chip color="accent" id="author" selected>by Daniel Ramirez</mat-chip>
+  </mat-chip-list>
+</mat-toolbar>
 
 <router-outlet></router-outlet>
+
+<!-- Footer -->
+<mat-toolbar class="app-footer-toolbar">
+  <span id="development">
+    <small>
+      A <a href="https://agile.nassao.com/acerca-de" target="_blank" rel="noopener">Daniel Ramirez</a> development
+    </small>
+  </span>
+    <span class="spacer"></span>
+    <span id="powered">
+      <small>
+        Powered by <a href="https://github.com/nassao/tech-front-livevox" target="_blank" rel="noopener">nassao</a>
+      </small>
+    </span>
+</mat-toolbar>

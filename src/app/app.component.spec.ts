@@ -2,11 +2,16 @@ import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatChipsModule } from "@angular/material/chips";
+
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        MatToolbarModule,
+        MatChipsModule,
       ],
       declarations: [
         AppComponent
@@ -20,16 +25,30 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'tech-front-livevox'`, () => {
+  it(`should have as title 'LV - User Manager'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('tech-front-livevox');
+    expect(app.title).toEqual('LV - User Manager');
   });
 
-  it('should render title', () => {
+  it('should render author', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('tech-front-livevox app is running!');
+    expect(compiled.querySelector('#author')?.textContent).toContain('by Daniel Ramirez');
+  });
+
+  it('should render development info', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('#development')?.textContent).toContain('A Daniel Ramirez development');
+  });
+
+  it('should render powered info', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('#powered')?.textContent).toContain('Powered by nassao');
   });
 });

@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.app-toolbar {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.app-footer-toolbar {
+  position: sticky;
+  position: -webkit-sticky;
+  bottom: 0;
+  z-index: 1000;
+}
