@@ -39,6 +39,8 @@ export class UserComponent implements OnInit {
   userPagination: UserResponsePagination;
   firstResult: number = 0;
   lastResult: number = 0;
+  isFirstPage: boolean = true;
+  isLastPage: boolean = false;
   
   displayedColumns: string[] = ['id', 'name', 'email'];
   dataSource = new MatTableDataSource<User>();
@@ -49,6 +51,7 @@ export class UserComponent implements OnInit {
  
   constructor(private rest: RestService, public dialog: MatDialog) {
     this.userPagination = emptyPagination;
+    this.checkPages();
     this.searchByNameFormControl = new FormControl('', []);
   }
 
@@ -65,6 +68,7 @@ export class UserComponent implements OnInit {
     this.rest.getUsers(query).subscribe((userResponse: UserResponse) => {
       this.userList = userResponse.data as Array<User>;
       this.userPagination = userResponse.meta?.pagination || emptyPagination;
+      this.checkPages();
 
       // Assign results to table
       this.dataSource.data = this.userList;
@@ -72,6 +76,10 @@ export class UserComponent implements OnInit {
       // Data for pagination
       this.firstResult = ((this.userPagination.page - 1) * this.userPagination.limit) + 1
       this.lastResult = this.userPagination.page * this.userPagination.limit
+
+      if (this.lastResult > this.userPagination.total) {
+        this.lastResult = this.userPagination.total;
+      }
     });
     
   }
@@ -158,5 +166,10 @@ export class UserComponent implements OnInit {
    goToLastPage() {
     this.searchPage = this.userPagination.pages;
     this.goToPage();
+  }
+
+  checkPages() {
+    this.isFirstPage = this.userPagination.page <= 1;
+    this.isLastPage = this.userPagination.page == this.userPagination.pages;
   }
 }
