@@ -1,11 +1,11 @@
-export interface UsersResponse {
+export interface UserResponse {
     "meta": {
-        "pagination": UsersResponsePagination
+        "pagination"?: UserResponsePagination
     },
-    "data": Array<Users>
+    "data": Array<User>
 }
 
-export interface UsersResponsePagination {
+export interface UserResponsePagination {
     "total": number,
     "pages": number,
     "page": number,
@@ -17,7 +17,7 @@ export interface UsersResponsePagination {
     }
 }
 
-export interface Users {
+export interface User {
     "id": number,
     "name": string,
     "email": string,

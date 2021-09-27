@@ -3,11 +3,8 @@
         <mat-chip color="primary" selected>
             <i class="fas fa-user"></i>
         </mat-chip>
-        <mat-chip id="user-id">
-            ID: {{data.id}}
-        </mat-chip>
     </mat-chip-list>
-    {{data.name}}
+    New User
 </h1>
 <div mat-dialog-content>
     
@@ -61,9 +58,4 @@
         <i class="fas fa-save"></i>
         Update
     </button>
-    <button mat-button color="warn" (click)="onDeleteClick(data.id)" cdkFocusInitial>
-        <i class="fas fa-trash"></i>
-        Delete
-    </button>
-
 </div>

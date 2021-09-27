@@ -14,16 +14,19 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
+import { MatCardModule } from "@angular/material/card";
 
 import { UserComponent } from './components/user/user.component';
 import { UpdateModalComponent } from './components/update-modal/update-modal.component';
 import { MatSelectModule } from '@angular/material/select';
+import { CreateModalComponent } from './components/create-modal/create-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
     UpdateModalComponent,
+    CreateModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +43,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatInputModule,
     MatSelectModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

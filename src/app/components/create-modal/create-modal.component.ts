@@ -6,11 +6,11 @@ import { User, UserResponse } from 'src/app/models/users-response';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
-  selector: 'app-update-modal',
-  templateUrl: './update-modal.component.html',
-  styleUrls: ['./update-modal.component.scss']
+  selector: 'app-create-modal',
+  templateUrl: './create-modal.component.html',
+  styleUrls: ['./create-modal.component.scss']
 })
-export class UpdateModalComponent {
+export class CreateModalComponent {
   nameFormControl: FormControl;
   emailFormControl: FormControl;
   matcher: ErrorStateMatcher;
@@ -26,7 +26,7 @@ export class UpdateModalComponent {
 
   constructor(
     private rest: RestService,
-    public dialogRef: MatDialogRef<UpdateModalComponent>,
+    public dialogRef: MatDialogRef<CreateModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: User
   ) {
     this.nameFormControl = new FormControl('', [
@@ -49,11 +49,11 @@ export class UpdateModalComponent {
   }
 
   /**
-   * Update User info
+   * Create new user
    * @param data User info
    */
   onClick(data: User) {
-    this.rest.updateUser(data).subscribe((userResponse: UserResponse) => {
+    this.rest.createUser(data).subscribe((userResponse: UserResponse) => {
 
       /** TODO confirmation message */
 
@@ -65,23 +65,4 @@ export class UpdateModalComponent {
 
     });
   }
-
-  /**
-   * Delete existing user
-   * @param id User ID to delete
-   */
-  onDeleteClick(id: number) {
-    this.rest.deleteUser(id).subscribe(() => {
-
-      /** TODO confirmation message */
-
-      // close Modal
-      this.dialogRef.close();
-    }, error => {
-
-      /** TODO show error message */
-
-    });
-  }
-
 }

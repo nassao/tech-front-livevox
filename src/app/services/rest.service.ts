@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import { environment } from "../../environments/environment";
-import { UsersResponse } from "../models/users-response";
+import { User, UserResponse } from "../models/users-response";
 
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
@@ -12,6 +12,8 @@ import { catchError, retry } from 'rxjs/operators';
 })
 export class RestService {
   baseUrl = environment.baseUrl;
+  token = environment.apiAccessToken;
+
   constructor(private http: HttpClient) { }
 
   /**
@@ -19,7 +21,58 @@ export class RestService {
    * @returns Array<Users>
    */
   getUsers() {
-    return this.http.get<UsersResponse>(this.baseUrl)
+    return this.http.get<UserResponse>(this.baseUrl)
+      .pipe(
+        retry(3), // retry a failed request up to 3 times
+        catchError(this.handleError) // then handle the error
+      );
+  }
+
+  /**
+   * Create new user
+   * @param data User info
+   * @returns User data confirmation
+   */
+   createUser(data: User) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}` })
+    };
+    return this.http.post<UserResponse>(this.baseUrl, data, httpOptions)
+      .pipe(
+        retry(3), // retry a failed request up to 3 times
+        catchError(this.handleError) // then handle the error
+      );
+  }
+
+  /**
+   * Update user info
+   * @param data New values for user
+   * @returns User data confirmation
+   */
+   updateUser(data: User) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}` })
+    };
+    return this.http.put<UserResponse>(`${this.baseUrl}/${data.id}`, data, httpOptions)
+      .pipe(
+        retry(3), // retry a failed request up to 3 times
+        catchError(this.handleError) // then handle the error
+      );
+  }
+
+  /**
+   * Delete user by id
+   * @param id Id to delete
+   * @returns User data confirmation
+   */
+   deleteUser(id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}` })
+    };
+    return this.http.delete(`${this.baseUrl}/${id}`, httpOptions)
       .pipe(
         retry(3), // retry a failed request up to 3 times
         catchError(this.handleError) // then handle the error
