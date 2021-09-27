@@ -47,7 +47,7 @@ import { CreateModalComponent } from './components/create-modal/create-modal.com
     MatCardModule,
     MatSnackBarModule,
   ],
-  providers: [],
+  providers: [MatSnackBarModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,15 +7,21 @@ import { MatChipsModule } from "@angular/material/chips";
 import { HttpClientModule } from "@angular/common/http";
 import { RestService } from './services/rest.service';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
+        BrowserAnimationsModule,
         MatToolbarModule,
         MatChipsModule,
         MatDialogModule,
+        MatCardModule,
+        MatSnackBarModule,
         HttpClientModule,
       ],
       providers: [

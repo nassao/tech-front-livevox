@@ -2,11 +2,12 @@ import { Component, OnInit, Inject} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
-import { UserResponse, User, UserResponsePagination } from 'src/app/models/users-response';
+import { UserResponse, User, UserResponsePagination, UserQuery } from 'src/app/models/users-response';
 
 import { RestService } from "../../services/rest.service";
 import { UpdateModalComponent } from '../update-modal/update-modal.component';
 import { CreateModalComponent } from '../create-modal/create-modal.component';
+import { FormControl } from '@angular/forms';
 
 const emptyPagination: UserResponsePagination = {
   "page": 0,
@@ -41,9 +42,14 @@ export class UserComponent implements OnInit {
   
   displayedColumns: string[] = ['id', 'name', 'email'];
   dataSource = new MatTableDataSource<User>();
+
+  searchPage: number = 1;
+  searchByName: string = '';
+  searchByNameFormControl: FormControl;
  
   constructor(private rest: RestService, public dialog: MatDialog) {
     this.userPagination = emptyPagination;
+    this.searchByNameFormControl = new FormControl('', []);
   }
 
   ngOnInit(): void {
@@ -52,9 +58,11 @@ export class UserComponent implements OnInit {
 
   /**
    * Fetch users list (default: first page)
+   * @param query Query parameters for search
    */
-  async getUserList() {
-    this.rest.getUsers().subscribe((userResponse: UserResponse) => {
+  async getUserList(query: UserQuery = {}) {
+
+    this.rest.getUsers(query).subscribe((userResponse: UserResponse) => {
       this.userList = userResponse.data as Array<User>;
       this.userPagination = userResponse.meta?.pagination || emptyPagination;
 
@@ -84,6 +92,9 @@ export class UserComponent implements OnInit {
     });
   }
 
+  /**
+   * Create a new user in a Modal
+   */
   newUser() {
     const dialogRef = this.dialog.open(CreateModalComponent, {
       width: '500px',
@@ -96,6 +107,56 @@ export class UserComponent implements OnInit {
 
       this.getUserList();
     });
+  }
 
+  /**
+   * Search for a user by partial name
+   */
+  search() {
+    const query: UserQuery = {name: this.searchByName}
+    this.getUserList(query);
+  }
+
+  /**
+   * Search asked page of user list results
+   */
+  goToPage() {
+    const query: UserQuery = {page: this.searchPage};
+    if (this.searchByName.length > 0) {
+      query.name = this.searchByName;
+    }
+    this.getUserList(query);
+  }
+
+  /**
+   * Go to first page of user list results
+   */
+   goToFirstPage() {
+    this.searchPage = 1;
+    this.goToPage();
+  }
+
+  /**
+   * Go to previous page of user list results
+   */
+   goToPreviousPage() {
+    this.searchPage = this.userPagination.page - 1;
+    this.goToPage();
+  }
+
+  /**
+   * Go to next page of user list results
+   */
+   goToNextPage() {
+    this.searchPage = this.userPagination.page + 1;
+    this.goToPage();
+  }
+
+  /**
+   * Go to last page of user list results
+   */
+   goToLastPage() {
+    this.searchPage = this.userPagination.pages;
+    this.goToPage();
   }
 }

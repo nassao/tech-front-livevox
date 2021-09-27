@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import { environment } from "../../environments/environment";
-import { User, UserResponse } from "../models/users-response";
+import { User, UserQuery, UserResponse } from "../models/users-response";
 
-import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -18,12 +18,30 @@ export class RestService {
 
   /**
    * Get user list
+   * @param query Query parameters for search
    * @returns Array<Users>
    */
-  getUsers() {
-    return this.http.get<UserResponse>(this.baseUrl)
+  getUsers(query: UserQuery = {}) {
+    let queryParams: string = '';
+    
+    // Process query parameters
+    Object.entries(query).forEach(
+      ([key, value]) => {
+        if (queryParams.length > 0) {
+          queryParams += '&';
+        }
+        queryParams += `${key}=${value}`;
+      }
+    );
+
+    // only if any parameter, include question mark
+    if (queryParams.length > 0) {
+      queryParams = '?' + queryParams;
+    }
+
+    return this.http.get<UserResponse>(this.baseUrl + queryParams)
       .pipe(
-        catchError(this.handleError) // then handle the error
+        catchError(this.handleError)
       );
   }
 
@@ -39,7 +57,7 @@ export class RestService {
     };
     return this.http.post<UserResponse>(this.baseUrl, data, httpOptions)
       .pipe(
-        catchError(this.handleError) // then handle the error
+        catchError(this.handleError)
       );
   }
 
@@ -55,7 +73,7 @@ export class RestService {
     };
     return this.http.put<UserResponse>(`${this.baseUrl}/${data.id}`, data, httpOptions)
       .pipe(
-        catchError(this.handleError) // then handle the error
+        catchError(this.handleError)
       );
   }
 
@@ -71,7 +89,7 @@ export class RestService {
     };
     return this.http.delete(`${this.baseUrl}/${id}`, httpOptions)
       .pipe(
-        catchError(this.handleError) // then handle the error
+        catchError(this.handleError)
       );
   }
 

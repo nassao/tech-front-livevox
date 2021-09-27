@@ -26,3 +26,8 @@ export interface User {
     field?: string;
     message?: string;
 }
+
+export interface UserQuery {
+    name?: string;
+    page?: number;
+}
