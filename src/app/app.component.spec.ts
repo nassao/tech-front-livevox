@@ -4,6 +4,9 @@ import { AppComponent } from './app.component';
 
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatChipsModule } from "@angular/material/chips";
+import { HttpClientModule } from "@angular/common/http";
+import { RestService } from './services/rest.service';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -12,6 +15,13 @@ describe('AppComponent', () => {
         RouterTestingModule,
         MatToolbarModule,
         MatChipsModule,
+        MatDialogModule,
+        HttpClientModule,
+      ],
+      providers: [
+        RestService,
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
       ],
       declarations: [
         AppComponent

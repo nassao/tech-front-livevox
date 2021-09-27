@@ -1,10 +1,11 @@
 import { Component, OnInit, Inject} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 import { UsersResponse, Users, UsersResponsePagination } from 'src/app/models/users-response';
 
 import { RestService } from "../../services/rest.service";
+import { UpdateModalComponent } from '../update-modal/update-modal.component';
 
 @Component({
   selector: 'app-user',
@@ -57,35 +58,21 @@ export class UserComponent implements OnInit {
     
   }
 
+  /**
+   * Popup modal with user detail
+   * @param user User to update
+   */
   openModal(user: Users) {
     console.log(user);
-    const dialogRef = this.dialog.open(DialogModal, {
-      width: '500px',
+    const dialogRef = this.dialog.open(UpdateModalComponent, {
+        width: '500px',
       data: user
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // this.animal = result;
+      console.log("After close result: ", result);
+      
     });
     
   }
 }
-
-
-
-@Component({
-  selector: 'dialog-modal',
-  templateUrl: 'dialog-modal.html',
-})
-export class DialogModal {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogModal>,
-    @Inject(MAT_DIALOG_DATA) public data: Users) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-}
-

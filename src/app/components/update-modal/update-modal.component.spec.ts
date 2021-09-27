@@ -1,15 +1,14 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Users } from 'src/app/models/users-response';
 import { RestService } from 'src/app/services/rest.service';
 
-import { UserComponent } from './user.component';
+import { UpdateModalComponent } from './update-modal.component';
 
-describe('UserComponent', () => {
-  let component: UserComponent;
-  let fixture: ComponentFixture<UserComponent>;
+describe('UpdateModalComponent', () => {
+  let component: UpdateModalComponent;
+  let fixture: ComponentFixture<UpdateModalComponent>;
   let restService: RestService;
   let httpMock: HttpTestingController;
   let httpClient: HttpClient;
@@ -25,7 +24,7 @@ describe('UserComponent', () => {
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} },
       ],
-      declarations: [ UserComponent ],
+      declarations: [ UpdateModalComponent ],
     })
     .compileComponents();
     restService = TestBed.inject(RestService);
@@ -34,7 +33,7 @@ describe('UserComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserComponent);
+    fixture = TestBed.createComponent(UpdateModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -43,19 +42,5 @@ describe('UserComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call openModal', () => {
-    const fixture = TestBed.createComponent(UserComponent);
-    const app = fixture.componentInstance;
-    const user: Users = {
-      "id": 123,
-      "name": "Mario Moreno",
-      "email": "cantinflas@oldmovies.com",
-      "gender": "male",
-      "status": "active"
-    };
-    app.openModal(user);
-    fixture.detectChanges();
-    const popUpHeader = document.getElementsByTagName('p')[0] as HTMLHeadElement;
-    expect(popUpHeader.innerText).toEqual("123");
-  })
+  
 });

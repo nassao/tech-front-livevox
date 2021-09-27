@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { environment } from "../../environments/environment";
-import { UsersResponse, Users, UsersResponsePagination } from "../models/users-response";
+import { UsersResponse } from "../models/users-response";
 
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
 @Injectable({
