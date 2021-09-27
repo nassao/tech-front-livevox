@@ -15,6 +15,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 import { MatCardModule } from "@angular/material/card";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 import { UserComponent } from './components/user/user.component';
 import { UpdateModalComponent } from './components/update-modal/update-modal.component';
@@ -44,6 +45,7 @@ import { CreateModalComponent } from './components/create-modal/create-modal.com
     MatInputModule,
     MatSelectModule,
     MatCardModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

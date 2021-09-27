@@ -55,7 +55,7 @@ export class UserComponent implements OnInit {
    */
   async getUserList() {
     this.rest.getUsers().subscribe((userResponse: UserResponse) => {
-      this.userList = userResponse.data;
+      this.userList = userResponse.data as Array<User>;
       this.userPagination = userResponse.meta?.pagination || emptyPagination;
 
       // Assign results to table

@@ -5,7 +5,7 @@ import { User, UserResponse } from "../models/users-response";
 
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,6 @@ export class RestService {
   getUsers() {
     return this.http.get<UserResponse>(this.baseUrl)
       .pipe(
-        retry(3), // retry a failed request up to 3 times
         catchError(this.handleError) // then handle the error
       );
   }
@@ -40,7 +39,6 @@ export class RestService {
     };
     return this.http.post<UserResponse>(this.baseUrl, data, httpOptions)
       .pipe(
-        retry(3), // retry a failed request up to 3 times
         catchError(this.handleError) // then handle the error
       );
   }
@@ -57,7 +55,6 @@ export class RestService {
     };
     return this.http.put<UserResponse>(`${this.baseUrl}/${data.id}`, data, httpOptions)
       .pipe(
-        retry(3), // retry a failed request up to 3 times
         catchError(this.handleError) // then handle the error
       );
   }
@@ -74,7 +71,6 @@ export class RestService {
     };
     return this.http.delete(`${this.baseUrl}/${id}`, httpOptions)
       .pipe(
-        retry(3), // retry a failed request up to 3 times
         catchError(this.handleError) // then handle the error
       );
   }
@@ -88,7 +84,7 @@ export class RestService {
     // Write error in console
     console.error(`Error code: ${error.status}, body: `, error.error);
     // Return error messaje
-    return throwError('Error; please try again.');
+    return throwError(error.error);
   }
 
 }
